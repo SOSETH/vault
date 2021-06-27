@@ -1,0 +1,38 @@
+# Full configuration options can be found at https://www.vaultproject.io/docs/configuration
+
+ui = true
+
+mlock = true
+#disable_mlock = true
+
+#storage "file" {
+#  path = "/var/lib/vault/data"
+#}
+
+storage "consul" {
+  address       = "{{ vault_consul_addr }}"
+  path          = "vault"
+  token         = "{{ vault_consul_token }}"
+  scheme        = "https"
+  tls_ca_file   = "/etc/vault.d/consul-ca.pem"
+  tls_cert_file = "/etc/vault.d/consul.pem"
+  tls_key_file  = "/etc/vault.d/consul.key"
+}
+
+# HTTPS private listener
+listener "tcp" {
+  address       = "{{ vault_bind_address }}"
+  tls_cert_file = "/etc/vault.d/server-priv.pem"
+  tls_key_file  = "/etc/vault.d/server-priv.key"
+  tls_disable_client_certs = true
+  telemetry {
+    unauthenticated_metrics_access = false
+  }
+
+  tls_min_version = "tls13"
+}
+
+telemetry {
+  disable_hostname = true
+  prometheus_retention_time = "24h"
+}

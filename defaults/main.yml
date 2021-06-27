@@ -1,0 +1,3 @@
+# vault_consul_token is deliberately not set!
+vault_bind_address: "0.0.0.0:8443"
+vault_consul_addr: "127.0.0.1:8501"
