@@ -26,7 +26,7 @@ listener "tcp" {
   tls_key_file  = "/etc/vault.d/server-priv.key"
   tls_disable_client_certs = true
   telemetry {
-    unauthenticated_metrics_access = false
+    unauthenticated_metrics_access = true
   }
 
   tls_min_version = "tls13"
